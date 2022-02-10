@@ -1,0 +1,243 @@
+#: import SwapTransition kivy.uix.screenmanager.SwapTransition
+
+<Label>:
+    color: "black"
+
+<Button>:
+    background_color: "white"
+    color: "white"
+
+# --------------------- Screens ---------------------------
+
+# "name:" is the screen name to be referred inside other screens, helps in screen change
+WindowManager: 
+    
+    transition: SwapTransition()
+    canvas.before:
+        Rectangle:
+            size: root.width, root.height
+            source: "background.jpg"
+
+    WelcomeScreen:
+    LoginScreen:
+    RegisterScreen:
+    HomeScreen:
+    BuyMedicines:
+    About:
+
+
+<WelcomeScreen>:
+
+    name: "welcomeScreen"
+
+    BoxLayout:
+        pos_hint: {"y": 0.35}
+        Label:
+            text: "Welcome To Medibuddy"
+            font_size: 30
+    
+    BoxLayout:
+        size_hint: 0.2, 0.1
+        size: 200, 100
+        pos_hint: {"x": 0.01, "y": 0.01}
+        orientation: 'vertical'
+        Button:
+            text: "Register"
+            on_release: 
+                app.root.current = "registerScreen"
+        Button:
+            text: "Login"
+            on_release: 
+                app.root.current = "loginScreen"
+
+
+<RegisterScreen>:
+
+    name: "registerScreen"
+    firstname: firstname
+    lastname: lastname
+    username: username
+    password: password
+
+    GridLayout:
+        cols: 2
+        size_hint: 0.7, 0.25
+        size: 200, 100
+        pos_hint: {"y": 0.4}
+        Label:
+            text: "First Name:"
+        TextInput: 
+            id: firstname
+            multiline: False
+            hint_text: "Enter first name here"
+        Label:
+            text: "Last Name:"
+        TextInput: 
+            id: lastname
+            multiline: False
+            hint_text: "Enter last name here"
+        Label:
+            text: "Username:"
+        TextInput: 
+            id: username
+            multiline: False
+            hint_text: "Enter username for your account"
+        Label:
+            text: "Password:"
+        TextInput: 
+            id: password
+            multiline: False
+            hint_text: "Enter password for your account"
+            password: True
+    BoxLayout:
+        size_hint: 0.2, 0.05
+        size: 200, 100
+        orientation: 'vertical'
+        pos_hint: {"x": 0.01, "y": 0.01}
+        Button:
+            text: "Submit" # POP UP FOR ALL DETAILS
+            on_release:
+                app.root.current = "homeScreen" if root.register() is True else "registerScreen"
+    BoxLayout:
+        size_hint: 0.2, 0.05
+        size: 200, 100
+        pos_hint: {"x": 0.795, "y": 0.01}
+        orientation: "vertical"
+        Button:
+            text: "Go back"
+            on_release:
+                app.root.current = "welcomeScreen"
+
+
+<LoginScreen>:
+
+    name: "loginScreen"
+    username: username
+    password: password
+
+    GridLayout:
+        cols: 2
+        size_hint: 0.7, 0.125
+        size: 200, 100
+        pos_hint: {"y": 0.45}
+        Label:
+            text: "Username:"
+        TextInput:
+            id: username
+            multiline: False
+            hint_text: "Enter username here"
+        Label:
+            text: "Password:"
+        TextInput:
+            id: password
+            multiline: False
+            hint_text: "Enter password here"
+            password: True
+    BoxLayout:
+        size_hint: 0.2, 0.05
+        size: 200, 100
+        orientation: 'vertical'
+        pos_hint: {"x": 0.01, "y": 0.01}
+        Button:
+            text: "Continue" # POP UP FOR WRONG DETAILS
+            on_release: 
+                app.root.current = "homeScreen" if root.login() is True else "loginScreen"
+    BoxLayout:
+        size_hint: 0.2, 0.05
+        size: 200, 100
+        pos_hint: {"x": 0.795, "y": 0.01}
+        orientation: "vertical"
+        Button:
+            text: "Go back"
+            on_release:
+                app.root.current = "welcomeScreen"
+
+
+<HomeScreen>:
+
+    name: "homeScreen"
+
+    BoxLayout:
+        size_hint: 0.2, 0.15
+        size: 200, 100
+        pos_hint: {"x": 0.01, "y": 0.85}
+        orientation: "vertical"
+        Label:
+            text: "Hello user!"
+            font_size: 30
+    BoxLayout:
+        size_hint: 0.2, 0.15
+        size: 200, 100
+        pos_hint: {"x": 0.01, "y": 0.45}
+        orientation: "vertical"
+        Button:
+            text: "Buy Meds"
+            on_release:
+                app.root.current = "buyMedsScreen"
+        Button:
+            text: "About"
+            on_release:
+                app.root.current = "aboutScreen"
+        Button:
+            text: "Quit"
+            on_press: quit()
+    BoxLayout:
+        size_hint: 0.2, 0.05
+        size: 200, 100
+        orientation: 'vertical'
+        pos_hint: {"x": 0.01, "y": 0.01}
+        Button:
+            text: "Logout"
+            on_release: 
+                app.root.current = "loginScreen"
+
+
+<BuyMedicines>:
+
+    name:"buyMedsScreen"
+    
+    BoxLayout:
+        size_hint: 0.2, 0.05
+        size: 200, 100
+        pos_hint: {"x": 0.795, "y": 0.01}
+        orientation: "vertical"
+        Button:
+            text: "Go back"
+            on_release:
+                app.root.current = "homeScreen"
+
+
+<About>:
+
+    name: "aboutScreen"
+    
+    BoxLayout:
+        pos_hint: {"y": -0.3}
+        Label:
+            text: root.information()
+            italic: True
+    BoxLayout:
+        size_hint: 0.2, 0.05
+        size: 200, 100
+        pos_hint: {"x": 0.01, "y": 0.01}
+        orientation: "vertical"
+        Button:
+            text: "Source Code"
+            on_press: root.linkToRepo()
+    BoxLayout:
+        size_hint: 0.2, 0.05
+        size: 200, 100
+        pos_hint: {"x": 0.4, "y": 0.01}
+        orientation: "vertical"
+        Button:
+            text: "User Profile"
+            on_press: root.linkToProfile()
+    BoxLayout:
+        size_hint: 0.2, 0.05
+        size: 200, 100
+        pos_hint: {"x": 0.795, "y": 0.01}
+        orientation: "vertical"
+        Button:
+            text: "Go back"
+            on_release:
+                app.root.current = "homeScreen"
