@@ -6,9 +6,8 @@ try:
     from mysql.connector import connect
     from kivy.app import App
     from kivy.lang import Builder
-    from kivy.uix.popup import Popup
-    from kivy.uix.widget import Widget
     from kivy.properties import ObjectProperty
+    from kivy.uix.scrollview import ScrollView
     from kivy.uix.screenmanager import Screen, ScreenManager
     print('All packages loaded.')
 except ImportError as ie:
@@ -29,9 +28,9 @@ except Exception as exception:
 # Function for quit button + Misc
 quit = lambda: exit()
 
+
 # ------------------- Screens ----------------------------
 # Backend Stuff (include methods which will be mapped to buttons)
-
 class WelcomeScreen(Screen):
     pass
 
@@ -87,7 +86,7 @@ class About(Screen):
     
     @staticmethod
     def information():
-        return "This app clone is made by Tamonud Sharma, Siddhant Ghosh & Sarvesh Rai as a part of our 12th grade Computer\nScience project. Click the 'Source Code' button to head over to source code for this app. Click 'User Profile' to\ncheck out my profile on github."
+        return "This app is made by Tamonud Sharma, Siddhant Ghosh & Sarvesh Rai as a part of our 12th grade Computer\nScience project. Click the 'Source Code' button to head over to source code for this app. Click 'User Profile' to\ncheck out my profile on github."
         
     @staticmethod
     def linkToRepo():
