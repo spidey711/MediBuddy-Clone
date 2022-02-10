@@ -9,7 +9,7 @@ Make sure you have a `.env` file with `passwd=` set to your SQL password.<br>
 The MySQL Database name is set to `medibuddy`.<br>
 As for the table(s):-
 
-<img src="/sql.png"></img>
+<img src="https://user-images.githubusercontent.com/73441372/153344337-a6527212-9c08-445a-a68e-807af8ac386a.png"></img>
 
 _<h2>Note</h2>_
 This repository will keep being updated as time goes on and I make more changes.<br>
