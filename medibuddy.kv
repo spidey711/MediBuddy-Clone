@@ -4,7 +4,8 @@
     color: "black"
 
 <Button>:
-    background_color: "white"
+    id: btn
+    background_color: "white" if btn.state == "normal" else "gray"
     color: "white"
 
 # --------------------- Screens ---------------------------
@@ -195,7 +196,33 @@ WindowManager:
 <BuyMedicines>:
 
     name:"buyMedsScreen"
-    
+
+    ScrollView:
+        do_scroll_x: False
+        do_scroll_y: True
+        size_hint_y: 0.73
+        pos_hint: {'x': 0, 'y': 0.11}
+        GridLayout:
+            size: root.width, root.height
+            size_hint_x: None
+            size_hint_y: 4
+            cols: 2
+            padding: 30
+            spacing: 30
+            height: self.minimum_height
+            row_default_height: 100
+            Button:
+                text: "1"
+            Button:
+                text: "2" 
+            Button:
+                text: "3" 
+            Button:
+                text: "4" 
+            Button:
+                text: "5" 
+            Button:
+                text: "6" 
     BoxLayout:
         size_hint: 0.2, 0.05
         size: 200, 100
@@ -205,14 +232,14 @@ WindowManager:
             text: "Go back"
             on_release:
                 app.root.current = "homeScreen"
-
+    
 
 <About>:
 
     name: "aboutScreen"
     
     BoxLayout:
-        pos_hint: {"y": -0.3}
+        pos_hint: {"y": 0.4}
         Label:
             text: root.information()
             italic: True
