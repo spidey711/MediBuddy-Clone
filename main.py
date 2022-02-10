@@ -7,7 +7,6 @@ try:
     from kivy.app import App
     from kivy.lang import Builder
     from kivy.properties import ObjectProperty
-    from kivy.uix.scrollview import ScrollView
     from kivy.uix.screenmanager import Screen, ScreenManager
     print('All packages loaded.')
 except ImportError as ie:
