@@ -17,7 +17,7 @@ WindowManager:
     canvas.before:
         Rectangle:
             size: root.width, root.height
-            source: "background.jpg"
+            source: "images/background.jpg"
 
     WelcomeScreen:
     LoginScreen:
@@ -196,33 +196,37 @@ WindowManager:
 <BuyMedicines>:
 
     name:"buyMedsScreen"
+    crocin: crocin
+    aspirin: aspirin
 
-    ScrollView:
-        do_scroll_x: False
-        do_scroll_y: True
-        size_hint_y: 0.73
-        pos_hint: {'x': 0, 'y': 0.11}
-        GridLayout:
-            size: root.width, root.height
-            size_hint_x: None
-            size_hint_y: 4
-            cols: 2
-            padding: 30
-            spacing: 30
-            height: self.minimum_height
-            row_default_height: 100
-            Button:
-                text: "1"
-            Button:
-                text: "2" 
-            Button:
-                text: "3" 
-            Button:
-                text: "4" 
-            Button:
-                text: "5" 
-            Button:
-                text: "6" 
+    GridLayout:
+        cols: 2
+        padding: 50
+        spacing: 50
+        Button:
+            id: crocin
+            background_normal: "images/crocin.jpg"
+            background_down: "images/added to cart.png"
+            size: 100, 100
+        Button:
+            id: aspirin
+            background_normal: "images/aspirin.webp"
+            background_down: "images/added to cart.png"
+            size: 100, 100
+    # ScrollView:
+    #     do_scroll_x: False
+    #     do_scroll_y: True
+    #     size_hint_y: 0.73
+    #     pos_hint: {'x': 0, 'y': 0.11}
+    #     GridLayout:
+    #         size: root.width, root.height
+    #         size_hint_x: None
+    #         size_hint_y: 4
+    #         cols: 2
+    #         padding: 30
+    #         spacing: 30
+    #         height: self.minimum_height
+    #         row_default_height: 100       
     BoxLayout:
         size_hint: 0.2, 0.05
         size: 200, 100
@@ -232,7 +236,11 @@ WindowManager:
             text: "Go back"
             on_release:
                 app.root.current = "homeScreen"
-    
+
+
+<Cart>:
+    name: "cartScreen"
+
 
 <About>:
 
