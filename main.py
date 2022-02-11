@@ -6,6 +6,7 @@ try:
     from mysql.connector import connect
     from kivy.app import App
     from kivy.lang import Builder
+    from kivy.uix.popup import Popup
     from kivy.properties import ObjectProperty
     from kivy.uix.screenmanager import Screen, ScreenManager
     print('All packages loaded.')
@@ -22,10 +23,16 @@ print("Connection to DB established.")
 # Function for quit button + Misc
 quit = lambda: exit()
 
-# Medicine Prices (SQL will be implemented later...)
-medPrices = {
-    "crocin": 27.50
-}
+# ------------------ Popup ------------------------------
+
+def showPopup(title, content, size):
+    popup = Popup(
+        title=title,
+        content=content,
+        size_hint=(None, None),
+        size=size
+    )
+    popup.open()
 
 # ------------------- Screens ----------------------------
 # Backend Stuff (include methods which will be mapped to buttons)
