@@ -16,7 +16,12 @@ except ImportError as ie:
 # Database Connection
 load_dotenv(".env")
 passwd = os.getenv("passwd")
-connection = connect(host='localhost', user='root', passwd=passwd, database='medibuddy')
+connection = connect(
+    host='localhost', 
+    user='root', 
+    passwd=passwd, 
+    database='medibuddy'
+)
 cursor = connection.cursor()
 print("Connection to DB established.")
 
@@ -35,7 +40,7 @@ def showPopup(title, content, size):
     popup.open()
 
 # ------------------- Screens ----------------------------
-# Backend Stuff (include methods which will be mapped to buttons)
+
 class WelcomeScreen(Screen):
     pass
 
@@ -68,10 +73,8 @@ class LoginScreen(Screen):
     def login(self):
         global cursor
         verify = (self.username.text, self.password.text)
-        # [i][0] -> username [i][1] -> password
         cursor.execute("SELECT username, password FROM userdata")
         data = cursor.fetchall()
-        # verification
         if verify in data: return True
         else: return False
 
@@ -85,9 +88,7 @@ class BuyMedicines(Screen):
 
 
 class Cart(Screen):
-    
-    def totalPrice(self):
-        pass
+    pass
 
 
 class About(Screen):
@@ -107,9 +108,9 @@ class About(Screen):
 
 class WindowManager(ScreenManager):
     pass
-# -------------------------------------------------------
 
-# App Setup
+# -------------------- App Setup -------------------------
+
 class MediBuddyApp(App):
     def build(self):
         return Builder.load_file("medibuddy.kv")
