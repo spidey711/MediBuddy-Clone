@@ -12,21 +12,20 @@ try:
 except ImportError as ie:
     print(ie)
 
-
 # Database Connection
 load_dotenv(".env")
 passwd = os.getenv("passwd")
-try:
-    connection = connect(host='localhost', user='root', passwd=passwd, database='medibuddy')
-    cursor = connection.cursor()
-    print('Connection to DB established.')
-except Exception as exception:
-    print(exception)
-
+connection = connect(host='localhost', user='root', passwd=passwd, database='medibuddy')
+cursor = connection.cursor()
+print("Connection to DB established.")
 
 # Function for quit button + Misc
 quit = lambda: exit()
 
+# Medicine Prices (SQL will be implemented later...)
+medPrices = {
+    "crocin": 27.50
+}
 
 # ------------------- Screens ----------------------------
 # Backend Stuff (include methods which will be mapped to buttons)
@@ -58,8 +57,9 @@ class RegisterScreen(Screen):
 class LoginScreen(Screen):
     username = ObjectProperty(None)
     password = ObjectProperty(None)
-    
+   
     def login(self):
+        global cursor
         verify = (self.username.text, self.password.text)
         # [i][0] -> username [i][1] -> password
         cursor.execute("SELECT username, password FROM userdata")
@@ -78,7 +78,9 @@ class BuyMedicines(Screen):
 
 
 class Cart(Screen):
-    pass
+    
+    def totalPrice(self):
+        pass
 
 
 class About(Screen):
@@ -98,7 +100,6 @@ class About(Screen):
 
 class WindowManager(ScreenManager):
     pass
-
 # -------------------------------------------------------
 
 # App Setup
