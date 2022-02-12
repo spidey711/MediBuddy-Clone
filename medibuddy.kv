@@ -1,12 +1,7 @@
 #: import SwapTransition kivy.uix.screenmanager.SwapTransition
 
-<Label>:
-    color: "black"
-
 <Button>:
     id: btn
-    background_color: "white" if btn.state == "normal" else "gray"
-    color: "white"
 
 # --------------------- Screens ---------------------------
 
@@ -23,8 +18,9 @@ WindowManager:
     LoginScreen:
     RegisterScreen:
     HomeScreen:
-    BuyMedicines:
-    About:
+    BuyMedicinesScreen:
+    CartScreen:
+    AboutScreen:
 
 
 <WelcomeScreen>:
@@ -36,6 +32,8 @@ WindowManager:
         Label:
             text: "Welcome To Medibuddy"
             font_size: 30
+            bold: True
+            italic: True
     
     BoxLayout:
         size_hint: 0.2, 0.1
@@ -166,6 +164,8 @@ WindowManager:
         Label:
             text: "Hello user!"
             font_size: 30
+            bold: True
+            italic: True
     BoxLayout:
         size_hint: 0.2, 0.15
         size: 200, 100
@@ -189,58 +189,74 @@ WindowManager:
         pos_hint: {"x": 0.01, "y": 0.01}
         Button:
             text: "Logout"
+            on_press: root.logout()
             on_release: 
                 app.root.current = "loginScreen"
 
 
-<BuyMedicines>:
+<CartScreen>:
+    
+    name: "cartScreen"
 
-    name:"buyMedsScreen"
-    crocin: crocin
-    aspirin: aspirin
+    GridLayout:
+        cols: 1
+        Label:
+            text: root.medsInCart()
+    BoxLayout:
+        size_hint: 0.2, 0.05
+        size: 200, 100
+        pos_hint: {"x": 0.795, "y": 0.01}
+        orientation: "vertical"
+        Button:
+            text: "Go back"
+            on_release:
+                app.root.current = "buyMedsScreen"
+    BoxLayout:
+        size_hint: 0.2, 0.05
+        size: 200, 100
+        orientation: 'vertical'
+        pos_hint: {"x": 0.01, "y": 0.01}
+        Button:
+            text: "Purchase"
+
+
+<BuyMedicinesScreen>:
+
+    name: "buyMedsScreen"
+
     GridLayout:
         cols: 1
         pos_hint: {"y": 0.45}
         Label:
             text: "Click on the images to add to cart."
-    ScrollView:
-        do_scroll_x: False
-        do_scroll_y: True
-        size_hint_y: 0.73
-        pos_hint: {'x': 0, 'y': 0.11}
-        GridLayout:
-            size: root.width, root.height
-            size_hint_x: None
-            size_hint_y: 4
-            cols: 2
-            padding: 50
-            spacing: 50
-            height: self.minimum_height
-            row_default_height: 100       
-            Button:
-                id: crocin
-                background_normal: "images/crocin.jpg"
-                background_down: "images/added to cart.png"
-            Button:
-                id: aspirin
-                background_normal: "images/aspirin.webp"
-                background_down: "images/added to cart.png"
-            Button:
-                id: aspirin
-                background_normal: "images/aspirin.webp"
-                background_down: "images/added to cart.png"
-            Button:
-                id: crocin
-                background_normal: "images/crocin.jpg"
-                background_down: "images/added to cart.png"
-            Button:
-                id: crocin
-                background_normal: "images/crocin.jpg"
-                background_down: "images/added to cart.png"
-            Button:
-                id: aspirin
-                background_normal: "images/aspirin.webp"
-                background_down: "images/added to cart.png"
+    GridLayout:
+        cols: 2
+        padding: 60
+        spacing: 60
+        Button:
+            id: "crocin"
+            background_normal: "images/crocin.jpg"
+            background_down: "images/added to cart.png"
+            on_press: root.addToCart()
+            on_release: root.cartPopup()
+        Button:
+            id: "aspirin"
+            background_normal: "images/aspirin.webp"
+            background_down: "images/added to cart.png"
+            on_press: root.addToCart()
+            on_release: root.cartPopup()
+        Button:
+            id: "nexium"
+            background_normal: "images/nexium.jpg"
+            background_down: "images/added to cart.png"
+            on_press: root.addToCart()
+            on_release: root.cartPopup()
+        Button:
+            id: "paracetamol"
+            background_normal: "images/paracetamol.jpg"
+            background_down: "images/added to cart.png"
+            on_press: root.addToCart()
+            on_release: root.cartPopup()
     BoxLayout:
         size_hint: 0.2, 0.05
         size: 200, 100
@@ -250,13 +266,18 @@ WindowManager:
             text: "Go back"
             on_release:
                 app.root.current = "homeScreen"
+    BoxLayout:
+        size_hint: 0.2, 0.05
+        size: 200, 100
+        orientation: 'vertical'
+        pos_hint: {"x": 0.01, "y": 0.01}
+        Button:
+            text: "View Cart"
+            on_release: 
+                app.root.current = "cartScreen"
 
 
-<Cart>:
-    name: "cartScreen"
-
-
-<About>:
+<AboutScreen>:
 
     name: "aboutScreen"
     
