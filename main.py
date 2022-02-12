@@ -8,6 +8,7 @@ try:
     from kivy.lang import Builder
     from kivy.uix.label import Label
     from kivy.uix.popup import Popup
+    from kivy.uix.widget import Widget
     from kivy.properties import ObjectProperty
     from kivy.uix.screenmanager import Screen, ScreenManager
     print('All packages loaded.')
@@ -26,9 +27,8 @@ connection = connect(
 cursor = connection.cursor()
 print("Connection to DB established.")
 
-# Function for quit button + Misc
+# Variables
 medList = []
-quit = lambda: exit()
 
 # ------------------- Screens ----------------------------
 
@@ -113,11 +113,17 @@ class HomeScreen(Screen):
         )
         popup.open()
 
+    @staticmethod
+    def exitApp():
+        exit()
+
 
 class BuyMedicinesScreen(Screen):
     
-    @staticmethod
-    def cartPopup():
+    def addToCart(self, button):
+        global medList
+        med = str(button.id)
+        medList.append(med)
         popup = Popup(
             title="Message",
             content=Label(text="Med added to cart.", color="white"),
@@ -125,11 +131,6 @@ class BuyMedicinesScreen(Screen):
             size=(300, 200)
         )
         popup.open()
-
-    def addToCart(self, instance):
-        global medList
-        med = instance.ids
-        medList.append(med)
 
 
 class CartScreen(Screen):
@@ -172,6 +173,19 @@ class WindowManager(ScreenManager):
 # -------------------- App Setup -------------------------
 
 class MediBuddyApp(App):
+    
+    # get button id
+    def PressButton(self, instance):
+        instance.parent.ids.lobj.text = str(instance)
+        instance.parent.ids.ltext.text = instance.text
+        instance.parent.ids.lid.text= self.get_id(instance)
+
+    def get_id(self, instance):
+        for id, widget in instance.parent.ids.items():
+            if widget.__self__ == instance:
+                print(id)
+    
+    # load UI into app
     def build(self):
         return Builder.load_file("medibuddy.kv")
 
