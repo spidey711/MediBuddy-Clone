@@ -147,11 +147,12 @@ class CartScreen(Screen):
         cursor.execute("SELECT * FROM prices")
         data = cursor.fetchall()
         priceList = []
-        with open("bills.txt", "a") as bill:
+        with open("bills.txt", "w") as bill:
             bill.write("------------------ BILL RECEIPT ------------------\n\n")
             bill.write("Date: {}\n".format(datetime.datetime.today()))
-            bill.write("Meds Purchased:-\n")
+            bill.write("Meds Purchased:-\n\n")
             for item in data:
+                # if item[0] == "crocin":
                 priceList.append(int(item[1]))
                 bill.write("{}:    Rs {}\n".format(str(item[0]).capitalize(), item[1]))
             bill.write("\nTotal Price: Rs {}\n\n".format(sum(priceList)))
