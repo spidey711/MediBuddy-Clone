@@ -1,6 +1,6 @@
 ------------------ BILL RECEIPT ------------------
 
-Date: 2022-02-13 09:36:06.705281
+Date: 2022-02-13 09:43:11.905534
 
 Meds Purchased:-
 Crocin:    Rs 25.0
@@ -15,7 +15,7 @@ Thank you for your purchase!
 
 ------------------ BILL RECEIPT ------------------
 
-Date: 2022-02-13 09:36:52.695380
+Date: 2022-02-13 09:43:27.237493
 
 Meds Purchased:-
 Crocin:    Rs 25.0
