@@ -146,7 +146,7 @@ class CartScreen(Screen):
         cursor.execute("SELECT * FROM prices")
         data = cursor.fetchall()
         priceList = []
-        with open("transaction.txt", "a") as bill:
+        with open("bills.txt", "a") as bill:
             bill.write("------------------ BILL RECEIPT ------------------\n\n")
             bill.write("Date: {}\n\n".format(datetime.datetime.today()))
             bill.write("Meds Purchased:-\n")
