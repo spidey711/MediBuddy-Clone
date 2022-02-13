@@ -187,7 +187,7 @@ class WindowManager(ScreenManager):
 
 # -------------------- App Setup -------------------------
 
-class MedicineOrderingApp(App):
+class MedOrderApp(App):
     
     # get button id
     def PressButton(self, instance):
@@ -202,7 +202,7 @@ class MedicineOrderingApp(App):
     
     # load UI into app
     def build(self):
-        return Builder.load_file("medibuddy.kv")
+        return Builder.load_file("medorder.kv")
 
 if __name__ == "__main__":
-    MedicineOrderingApp().run()
+    MedOrderApp().run()
