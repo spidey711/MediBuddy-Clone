@@ -1,4 +1,4 @@
-# MediBuddy-Clone
+# Medicine-Ordering-App
 
 _<h2>Purpose</h2>_
 This is a MediBuddy clone that I planned to make for a 12th grade Computer Science Project. I used Kivy Module for the Graphic User Interface.
