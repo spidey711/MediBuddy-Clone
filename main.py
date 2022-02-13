@@ -2,6 +2,7 @@
 try:
     import os
     import datetime
+    import subprocess
     import webbrowser
     from dotenv import load_dotenv
     from mysql.connector import connect
@@ -148,7 +149,7 @@ class CartScreen(Screen):
         priceList = []
         with open("bills.txt", "a") as bill:
             bill.write("------------------ BILL RECEIPT ------------------\n\n")
-            bill.write("Date: {}\n\n".format(datetime.datetime.today()))
+            bill.write("Date: {}\n".format(datetime.datetime.today()))
             bill.write("Meds Purchased:-\n")
             for item in data:
                 priceList.append(int(item[1]))
@@ -163,6 +164,7 @@ class CartScreen(Screen):
             size=(300, 200)
         )
         popup.open()
+        subprocess.Popen(['notepad.exe', 'bills.txt'])
         medList.clear()
         priceList.clear()
         
