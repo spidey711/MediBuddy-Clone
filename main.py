@@ -1,6 +1,7 @@
 # Imports
 try:
     import os
+    import datetime
     import webbrowser
     from dotenv import load_dotenv
     from mysql.connector import connect
@@ -44,7 +45,7 @@ class RegisterScreen(Screen):
     # saves data in db
     def register(self):
        # making sure no details are empty 
-        if self.firstname.text and self.lastname.text and self.username.text and self.password.text is not None and self.password.text is not "":
+        if self.firstname.text and self.lastname.text and self.username.text and self.password.text is not None and self.password.text != "":
             cursor.execute("""INSERT INTO userdata VALUES("{}", "{}", "{}", "{}")""".format(
                 self.firstname.text, 
                 self.lastname.text, 
@@ -142,21 +143,35 @@ class CartScreen(Screen):
 
     def totalPrice(self):
         global medList
-        sum = None
         cursor.execute("SELECT * FROM prices")
         data = cursor.fetchall()
-        for row in data:
-            for med in medList:
-                if med == row[0]:
-                    sum += row[1]
-        return sum
-
+        priceList = []
+        with open("transaction.txt", "a") as bill:
+            bill.write("------------------ BILL RECEIPT ------------------\n\n")
+            bill.write("Date: {}\n\n".format(datetime.datetime.today()))
+            bill.write("Meds Purchased:-\n")
+            for item in data:
+                priceList.append(int(item[1]))
+                bill.write("{}:    Rs {}\n".format(str(item[0]).capitalize(), item[1]))
+            bill.write("\nTotal Price: Rs {}\n\n".format(sum(priceList)))
+            bill.write("Thank you for your purchase!\n")
+            bill.write("---------------------------------------------------\n\n")
+        popup = Popup(
+            title="Message",
+            content=Label(text="Bill Receipt has been generated.\nThank you for your purchase!", color="white"),
+            size_hint=(None, None),
+            size=(300, 200)
+        )
+        popup.open()
+        medList.clear()
+        priceList.clear()
+        
 
 class AboutScreen(Screen):
     
     @staticmethod
     def information():
-        return "This app is made by Tamonud Sharma, Siddhant Ghosh & Sarvesh Rai as a part of our 12th grade Computer\nScience project. Click the 'Source Code' button to head over to source code for this app. Click 'User Profile' to\ncheck out my profile on github."
+        return "This app is made by Tamonud Sharma, Siddhant Ghosh & Sarvesh Sai as a part of our 12th grade Computer\nScience project. Click the 'Source Code' button to head over to source code for this app. Click 'User Profile' to\ncheck out my profile on github."
         
     @staticmethod
     def linkToRepo():
