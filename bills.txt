@@ -1,0 +1,30 @@
+------------------ BILL RECEIPT ------------------
+
+Date: 2022-02-13 09:33:10.130251
+
+Meds Purchased:-
+Crocin:    Rs 25.0
+Aspirin:    Rs 30.0
+Nexium:    Rs 35.0
+Paracetamol:    Rs 28.0
+
+Total Price: Rs 118
+
+Thank you for your purchase!
+---------------------------------------------------
+
+------------------ BILL RECEIPT ------------------
+
+Date: 2022-02-13 09:33:12.802166
+
+Meds Purchased:-
+Crocin:    Rs 25.0
+Aspirin:    Rs 30.0
+Nexium:    Rs 35.0
+Paracetamol:    Rs 28.0
+
+Total Price: Rs 118
+
+Thank you for your purchase!
+---------------------------------------------------
+
