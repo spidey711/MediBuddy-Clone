@@ -1,3 +1,5 @@
+# Kivy latest version: 2.0.0
+
 # Imports
 try:
     import os
@@ -10,7 +12,7 @@ try:
     from kivy.lang import Builder
     from kivy.uix.label import Label
     from kivy.uix.popup import Popup
-    from kivy.uix.widget import Widget
+    from kivy.uix.button import Button
     from kivy.properties import ObjectProperty
     from kivy.uix.screenmanager import Screen, ScreenManager
     print('All packages loaded.')
@@ -24,7 +26,7 @@ connection = connect(
     host='localhost', 
     user='root', 
     passwd=passwd, 
-    database='medibuddy'
+    database='medmart'
 )
 cursor = connection.cursor()
 print("Connection to DB established.")
@@ -122,10 +124,16 @@ class HomeScreen(Screen):
 
 class BuyMedicinesScreen(Screen):
     
-    def addToCart(self, button):
+    # refer to screen as self and all ids in the screen can be accessed by self.ids (dict data type)
+        # for childLayout in self.children:             # ACCESSING LAYOUTS
+        #     for childFeature in childLayout.children: # ACCESSING FEATURES OF LAYOUTS
+        #         if isinstance(childFeature, Button):  # IF FEATURE IS BUTTON
+        #             print(childFeature.ids)           # ADD BUTTON ID TO MED LIST
+    def addToCart(self, instance):
         global medList
-        med = str(button.id)
-        medList.append(med)
+        print(instance.ids)
+        for id in self.ids: print(id)
+        print(medList)
         popup = Popup(
             title="Message",
             content=Label(text="Med added to cart.", color="white"),
@@ -147,12 +155,12 @@ class CartScreen(Screen):
         cursor.execute("SELECT * FROM prices")
         data = cursor.fetchall()
         priceList = []
+        # if sum(priceList) > 0:
         with open("bills.txt", "w") as bill:
             bill.write("------------------ BILL RECEIPT ------------------\n\n")
             bill.write("Date: {}\n".format(datetime.datetime.today()))
             bill.write("Meds Purchased:-\n\n")
             for item in data:
-                # if item[0] == "crocin":
                 priceList.append(int(item[1]))
                 bill.write("{}:    Rs {}\n".format(str(item[0]).capitalize(), item[1]))
             bill.write("\nTotal Price: Rs {}\n\n".format(sum(priceList)))
@@ -166,6 +174,14 @@ class CartScreen(Screen):
         )
         popup.open()
         subprocess.Popen(['notepad.exe', 'bills.txt'])
+        # else:
+        #     popup = Popup(
+        #         title="Message",
+        #         content=Label(text="You didn't purchase anything.\nBill couldn't be generated.", color="white"),
+        #         size_hint=(None, None),
+        #         size=(300, 200) 
+        #     )
+        #     popup.open()
         medList.clear()
         priceList.clear()
         
@@ -191,17 +207,6 @@ class WindowManager(ScreenManager):
 # -------------------- App Setup -------------------------
 
 class MedmartApp(App):
-    
-    # get button id
-    def PressButton(self, instance):
-        instance.parent.ids.lobj.text = str(instance)
-        instance.parent.ids.ltext.text = instance.text
-        instance.parent.ids.lid.text= self.get_id(instance)
-
-    def get_id(self, instance):
-        for id, widget in instance.parent.ids.items():
-            if widget.__self__ == instance:
-                print(id)
     
     # load UI into app
     def build(self):
