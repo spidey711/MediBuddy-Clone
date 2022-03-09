@@ -123,16 +123,16 @@ class HomeScreen(Screen):
 
 
 class BuyMedicinesScreen(Screen):
-    
-    # refer to screen as self and all ids in the screen can be accessed by self.ids (dict data type)
-        # for childLayout in self.children:             # ACCESSING LAYOUTS
-        #     for childFeature in childLayout.children: # ACCESSING FEATURES OF LAYOUTS
-        #         if isinstance(childFeature, Button):  # IF FEATURE IS BUTTON
-        #             print(childFeature.ids)           # ADD BUTTON ID TO MED LIST
+
     def addToCart(self, instance):
         global medList
-        print(instance.ids)
-        for id in self.ids: print(id)
+        # for childLayout in self.children:
+        #     for childFeature in childLayout.children:
+        #         if isinstance(childFeature, Button):
+        #             if childFeature.state == "down":
+        #                 medList.append("Pressed")
+        # Maybe use widgets here? :pepethink:
+        print(self, instance)
         print(medList)
         popup = Popup(
             title="Message",
@@ -155,33 +155,34 @@ class CartScreen(Screen):
         cursor.execute("SELECT * FROM prices")
         data = cursor.fetchall()
         priceList = []
-        # if sum(priceList) > 0:
         with open("bills.txt", "w") as bill:
             bill.write("------------------ BILL RECEIPT ------------------\n\n")
             bill.write("Date: {}\n".format(datetime.datetime.today()))
             bill.write("Meds Purchased:-\n\n")
+            # compare meds in medlist with meds in table
             for item in data:
-                priceList.append(int(item[1]))
+                priceList.append(item[1])
                 bill.write("{}:    Rs {}\n".format(str(item[0]).capitalize(), item[1]))
             bill.write("\nTotal Price: Rs {}\n\n".format(sum(priceList)))
             bill.write("Thank you for your purchase!\n")
             bill.write("---------------------------------------------------\n\n")
-        popup = Popup(
-            title="Message",
-            content=Label(text="Bill Receipt has been generated.\nThank you for your purchase!", color="white"),
-            size_hint=(None, None),
-            size=(300, 200)
-        )
-        popup.open()
-        subprocess.Popen(['notepad.exe', 'bills.txt'])
-        # else:
-        #     popup = Popup(
-        #         title="Message",
-        #         content=Label(text="You didn't purchase anything.\nBill couldn't be generated.", color="white"),
-        #         size_hint=(None, None),
-        #         size=(300, 200) 
-        #     )
-        #     popup.open()
+        if len(priceList) > 0:
+            popup = Popup(
+                title="Message",
+                content=Label(text="Bill Receipt has been generated.", color="white"),
+                size_hint=(None, None),
+                size=(300, 200)
+            )
+            popup.open()
+            subprocess.Popen(['notepad.exe', 'bills.txt']) # for showing bill in notepad
+        else:
+            popup = Popup(
+                title="Message",
+                content=Label(text="You didn't purchase anything.\nBill couldn't be generated.", color="white"),
+                size_hint=(None, None),
+                size=(300, 200) 
+            )
+            popup.open()
         medList.clear()
         priceList.clear()
         
