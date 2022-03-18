@@ -13,6 +13,7 @@ try:
     from kivy.uix.label import Label
     from kivy.uix.popup import Popup
     from kivy.uix.button import Button
+    from kivy.uix.widget import Widget
     from kivy.properties import ObjectProperty
     from kivy.uix.screenmanager import Screen, ScreenManager
     print('All packages loaded.')
@@ -41,13 +42,16 @@ class WelcomeScreen(Screen):
 
 
 class RegisterScreen(Screen):
+    
     firstname = ObjectProperty(None)
     lastname = ObjectProperty(None)
     username = ObjectProperty(None)
     password = ObjectProperty(None)
+    
     # saves data in db
     def register(self):
        # making sure no details are empty 
+    
         if self.firstname.text and self.lastname.text and self.username.text and self.password.text is not None and self.password.text != "":
             cursor.execute("""INSERT INTO userdata VALUES("{}", "{}", "{}", "{}")""".format(
                 self.firstname.text, 
@@ -77,14 +81,17 @@ class RegisterScreen(Screen):
 
 
 class LoginScreen(Screen):
+    
     username = ObjectProperty(None)
     password = ObjectProperty(None)
    
     def login(self):
         global cursor
+    
         verify = (self.username.text, self.password.text)
         cursor.execute("SELECT username, password FROM userdata")
         data = cursor.fetchall()
+    
         if verify in data: 
             popup = Popup(
                 title="Message", 
@@ -117,6 +124,7 @@ class HomeScreen(Screen):
         )
         popup.open()
 
+
     @staticmethod
     def exitApp():
         exit()
@@ -126,14 +134,14 @@ class BuyMedicinesScreen(Screen):
 
     def addToCart(self, instance):
         global medList
-        # for childLayout in self.children:
-        #     for childFeature in childLayout.children:
-        #         if isinstance(childFeature, Button):
-        #             if childFeature.state == "down":
-        #                 medList.append("Pressed")
-        # Maybe use widgets here? :pepethink:
-        print(self, instance)
-        print(medList)
+        
+        for childLayout in self.children:
+            for childFeature in childLayout.children:
+                if isinstance(childFeature, Button):
+                    print(childFeature)
+                else:
+                    print("Doesn't match.")
+        
         popup = Popup(
             title="Message",
             content=Label(text="Med added to cart.", color="white"),
@@ -141,31 +149,34 @@ class BuyMedicinesScreen(Screen):
             size=(300, 200)
         )
         popup.open()
-
-
-class CartScreen(Screen):
     
-    @staticmethod
-    def medsInCart():
-        global medList
-        return ",".join(medList)
 
-    def totalPrice(self):
+    def billing(self):
         global medList
+    
         cursor.execute("SELECT * FROM prices")
         data = cursor.fetchall()
-        priceList = []
+        priceList = [] # to sum up the price of all meds
+        
         with open("bills.txt", "w") as bill:
+            # formatting bill
             bill.write("------------------ BILL RECEIPT ------------------\n\n")
             bill.write("Date: {}\n".format(datetime.datetime.today()))
             bill.write("Meds Purchased:-\n\n")
+
             # compare meds in medlist with meds in table
-            for item in data:
-                priceList.append(item[1])
-                bill.write("{}:    Rs {}\n".format(str(item[0]).capitalize(), item[1]))
+            for med in medList:
+                for item in data: # item = (name of med, price)
+                    if item == med:
+                        priceList.append(item[1])
+                        bill.write("{}:    Rs {}\n".format(str(item[0]).capitalize(), item[1]))
+            
+            # formatting bill pt.2
             bill.write("\nTotal Price: Rs {}\n\n".format(sum(priceList)))
             bill.write("Thank you for your purchase!\n")
             bill.write("---------------------------------------------------\n\n")
+
+        # popups for buying without meds ATC and with meds ATC (ATC - Added To Cart)
         if len(priceList) > 0:
             popup = Popup(
                 title="Message",
@@ -183,6 +194,8 @@ class CartScreen(Screen):
                 size=(300, 200) 
             )
             popup.open()
+        
+        # reset variables
         medList.clear()
         priceList.clear()
         
@@ -193,9 +206,11 @@ class AboutScreen(Screen):
     def information():
         return "This app is made by Tamonud Sharma, Siddhant Ghosh & Sarvesh Sai as a part of our 12th grade Computer\nScience project. Click the 'Source Code' button to head over to source code for this app. Click 'User Profile' to\ncheck out my profile on github. Thank you!"
         
+        
     @staticmethod
     def linkToRepo():
         webbrowser.open("https://github.com/spidey711/MediBuddy-Clone")
+        
         
     @staticmethod
     def linkToProfile():
