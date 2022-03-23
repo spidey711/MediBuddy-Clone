@@ -137,10 +137,10 @@ class BuyMedicinesScreen(Screen):
         if self.medicine.text.strip():
             li = list(self.medicine.text.split(","))
             for item in li:
-                medList.append(item.strip())
+                medList.append(item.strip()) # remove whitespaces
             popup = Popup(
                 title="Message",
-                content=Label(text="Med added to cart.", color="white"),
+                content=Label(text="Med(s) added to cart.", color="white"),
                 size_hint=(None, None),
                 size=(300, 200)
             )
@@ -159,6 +159,22 @@ class BuyMedicinesScreen(Screen):
 
 class CartScreen(Screen):
 
+    @staticmethod
+    def infoCrocin():
+        return "Uses: \nContents: \nPrice: "
+
+    @staticmethod
+    def infoNexium():
+        return "Uses: \nContents: \nPrice: "
+
+    @staticmethod
+    def infoParacetamol():
+        return "Uses: \nContents: \nPrice: "
+
+    @staticmethod
+    def infoAspirin():
+        return "Uses: \nContents: \nPrices: "
+
     def billing(self):    
         cursor.execute("SELECT * FROM prices")
         data = cursor.fetchall()
@@ -166,21 +182,20 @@ class CartScreen(Screen):
         
         with open("bills.txt", "w") as bill:
             # formatting bill
-            bill.write("------------------ BILL RECEIPT ------------------\n\n")
-            bill.write("Date: {}\n".format(datetime.datetime.today()))
-            bill.write("Meds Purchased:-\n\n")
+            bill.write("-------------- BILL RECEIPT --------------\n\n")
+            bill.write(f"Date: {datetime.datetime.today().date()}\nTime: {datetime.datetime.today().time()}\n\nMedicines Purchased:-\n\n")
 
             # compare meds in medlist with meds in table
             for med in medList:
                 for item in data: # item = (name of med, price)
                     if item[0] == med:
                         priceList.append(item[1])
-                        bill.write("{}:    Rs {}\n".format(str(item[0]).capitalize(), item[1]))
+                        bill.write("{}:  Rs {}\n".format(str(item[0]).capitalize(), item[1]))
             
             # formatting bill pt.2
-            bill.write("\nTotal Price: Rs {}\n\n".format(sum(priceList)))
+            bill.write("\nTotal Price:  Rs {}\n\n".format(sum(priceList)))
             bill.write("Thank you for your purchase!\n")
-            bill.write("---------------------------------------------------\n\n")
+            bill.write("---------------------------------------------\n\n")
 
         # popups for buying without meds ATC and with meds ATC (ATC - Added To Cart)
         if len(priceList) > 0:
@@ -214,7 +229,7 @@ class AboutScreen(Screen):
         
     @staticmethod
     def linkToRepo():
-        webbrowser.open("https://github.com/spidey711/MediBuddy-Clone")
+        webbrowser.open("https://github.com/spidey711/Medmart")
         
     @staticmethod
     def linkToProfile():
