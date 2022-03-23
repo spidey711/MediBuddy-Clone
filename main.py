@@ -22,15 +22,17 @@ except ImportError as ie:
 
 # Database Connection
 load_dotenv(".env")
-passwd = os.getenv("passwd")
-connection = connect(
-    host='localhost', 
-    user='root', 
-    passwd=passwd, 
-    database='medmart'
-)
-cursor = connection.cursor()
-print("Connection to DB established.")
+try:
+    connection = connect(
+        host='localhost', 
+        user='root', 
+        passwd=os.getenv("passwd"), 
+        database='medmart'
+    )
+    cursor = connection.cursor()
+    print("Connection to DB established.")
+except Exception as error:
+    print(error)
 
 # Variables
 medList = []
@@ -86,8 +88,6 @@ class LoginScreen(Screen):
     password = ObjectProperty(None)
    
     def login(self):
-        global cursor
-    
         verify = (self.username.text, self.password.text)
         cursor.execute("SELECT username, password FROM userdata")
         data = cursor.fetchall()
@@ -124,36 +124,42 @@ class HomeScreen(Screen):
         )
         popup.open()
 
-
     @staticmethod
     def exitApp():
         exit()
 
 
 class BuyMedicinesScreen(Screen):
-
-    def addToCart(self, instance):
-        global medList
-        
-        for childLayout in self.children:
-            for childFeature in childLayout.children:
-                if isinstance(childFeature, Button):
-                    print(childFeature)
-                else:
-                    print("Doesn't match.")
-        
-        popup = Popup(
-            title="Message",
-            content=Label(text="Med added to cart.", color="white"),
-            size_hint=(None, None),
-            size=(300, 200)
-        )
-        popup.open()
     
-
-    def billing(self):
-        global medList
+    medicine = ObjectProperty(None)
     
+    def addToCart(self):
+        if self.medicine.text.strip():
+            li = list(self.medicine.text.split(","))
+            for item in li:
+                medList.append(item.strip())
+            popup = Popup(
+                title="Message",
+                content=Label(text="Med added to cart.", color="white"),
+                size_hint=(None, None),
+                size=(300, 200)
+            )
+            popup.open()
+            if len(medList) != 0: return True
+            else: return False
+        else:
+            popup = Popup(
+                title="Message",
+                content=Label(text="No medicine name was mentioned.", color="white"),
+                size_hint=(None, None),
+                size=(300, 200)
+            )
+            popup.open()
+
+
+class CartScreen(Screen):
+
+    def billing(self):    
         cursor.execute("SELECT * FROM prices")
         data = cursor.fetchall()
         priceList = [] # to sum up the price of all meds
@@ -167,7 +173,7 @@ class BuyMedicinesScreen(Screen):
             # compare meds in medlist with meds in table
             for med in medList:
                 for item in data: # item = (name of med, price)
-                    if item == med:
+                    if item[0] == med:
                         priceList.append(item[1])
                         bill.write("{}:    Rs {}\n".format(str(item[0]).capitalize(), item[1]))
             
@@ -206,11 +212,9 @@ class AboutScreen(Screen):
     def information():
         return "This app is made by Tamonud Sharma, Siddhant Ghosh & Sarvesh Sai as a part of our 12th grade Computer\nScience project. Click the 'Source Code' button to head over to source code for this app. Click 'User Profile' to\ncheck out my profile on github. Thank you!"
         
-        
     @staticmethod
     def linkToRepo():
         webbrowser.open("https://github.com/spidey711/MediBuddy-Clone")
-        
         
     @staticmethod
     def linkToProfile():
