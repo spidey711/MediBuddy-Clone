@@ -1,11 +1,14 @@
------------------- BILL RECEIPT ------------------
+-------------- BILL RECEIPT --------------
 
-Date: 2022-03-18 23:40:45.533375
-Meds Purchased:-
+Date: 2022-03-23
+Time: 23:54:53.094242
 
+Medicines Purchased:-
 
-Total Price: Rs 0
+Crocin:  Rs 30
+
+Total Price:  Rs 30
 
 Thank you for your purchase!
----------------------------------------------------
+---------------------------------------------
 
