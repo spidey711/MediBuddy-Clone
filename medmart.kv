@@ -19,6 +19,7 @@ WindowManager:
     RegisterScreen:
     HomeScreen:
     BuyMedicinesScreen:
+    CartScreen:
     AboutScreen: 
 
 
@@ -193,67 +194,40 @@ WindowManager:
                 app.root.current = "loginScreen"
 
 
-# <CartScreen>:
-    
-#     name: "cartScreen"
-
-#     # GridLayout:
-#     #     cols: 2
-#     #     Image:
-#     #         source: "images/crocin.jpg"
-
-#     BoxLayout:
-#         size_hint: 0.2, 0.05
-#         size: 200, 100
-#         pos_hint: {"x": 0.795, "y": 0.01}
-#         orientation: "vertical"
-#         Button:
-#             text: "Go back"
-#             on_release:
-#                 app.root.current = "buyMedsScreen"
-#     BoxLayout:
-#         size_hint: 0.2, 0.05
-#         size: 200, 100
-#         orientation: 'vertical'
-#         pos_hint: {"x": 0.01, "y": 0.01}
-#         Button:
-#             text: "Purchase"
-#             on_release: root.totalPrice()
-
-
 <BuyMedicinesScreen>:
 
     name: "buyMedsScreen"
+    medicine: medicine
 
     GridLayout:
-        cols: 1
-        pos_hint: {"y": 0.45}
-        Label:
-            text: "Click on the images to add to cart."
-    GridLayout:
         cols: 2
-        padding: 60
-        spacing: 60
-        MyButton:
-            id: crocin
-            background_normal: "images/crocin.jpg"
-            background_down: "images/added to cart.png"
-            on_release: root.addToCart(self)
-        MyButton:
-            id: aspirin
-            background_normal: "images/aspirin.webp"
-            background_down: "images/added to cart.png"
-            on_release: root.addToCart(self)
-        MyButton:
-            id: nexium
-            background_normal: "images/nexium.jpg"
-            background_down: "images/added to cart.png"
-            on_release: root.addToCart(self)
-        MyButton:
-            id: paracetamol
-            background_normal: "images/paracetamol.jpg"
-            background_down: "images/added to cart.png"
-            on_release: root.addToCart(self)
+        padding: 70
+        spacing: 50
+        Image:
+            source: "images/aspirin.webp"
+        Image:
+            source: "images/crocin.jpg"
+        Image:
+            source: "images/nexium.jpg"
+        Image:
+            source: "images/paracetamol.jpg"
+    BoxLayout:
+        size_hint: 0.721, 0.05
+        size: 200, 100
+        pos_hint: {"x": 0.15, "y": 0.9}
+        TextInput:
+            id: medicine
+            mutliline: False
+            hint_text: "Choose from available medicines"
+    BoxLayout:
+        size_hint: 0.2, 0.05
+        size: 200, 100
+        pos_hint: {"x": 0.01, "y": 0.01}
+        orientation: "vertical"
+        Button:
+            text: "Add to cart"
+            on_release:
+                app.root.current = "cartScreen" if root.addToCart() is True else "buyMedsScreen"
     BoxLayout:
         size_hint: 0.2, 0.05
         size: 200, 100
@@ -263,6 +237,12 @@ WindowManager:
             text: "Go back"
             on_release:
                 app.root.current = "homeScreen"
+                
+
+<CartScreen>:
+
+    name: "cartScreen"
+
     BoxLayout:
         size_hint: 0.2, 0.05
         size: 200, 100
@@ -271,7 +251,15 @@ WindowManager:
         Button:
             text: "Purchase"
             on_release: root.billing()
-                
+    BoxLayout:
+        size_hint: 0.2, 0.05
+        size: 200, 100
+        pos_hint: {"x": 0.795, "y": 0.01}
+        orientation: "vertical"
+        Button:
+            text: "Go back"
+            on_release:
+                app.root.current = "buyMedsScreen"
 
 
 <AboutScreen>:
