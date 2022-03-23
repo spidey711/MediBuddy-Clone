@@ -243,6 +243,39 @@ WindowManager:
 
     name: "cartScreen"
 
+    GridLayout:
+        cols: 1
+        pos_hint: {"y": 0.43}
+        Label:
+            font_size: 30
+            text: "Medicine Information"
+            bold: True
+            italic: True
+    GridLayout:
+        cols: 4
+        padding: 30
+        spacing: 10
+        Image:
+            source: "images/crocin.jpg"
+        Label:
+            text: root.infoCrocin()
+            color: "black"
+        Image:
+            source: "images/nexium.jpg"
+        Label:
+            text: root.infoNexium()
+            color: "black"
+        Image:
+            source: "images/paracetamol.jpg"
+        Label:
+            text: root.infoParacetamol()
+            color: "black"
+        Image:
+            source: "images/aspirin.webp"
+        Label:
+            text: root.infoAspirin()
+            color: "black"
+
     BoxLayout:
         size_hint: 0.2, 0.05
         size: 200, 100
