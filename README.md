@@ -1,7 +1,7 @@
 # Medicine Ordering App (Medmart)
 
 _<h2>Purpose</h2>_
-This is a MediBuddy clone that I planned to make for a 12th grade Computer Science Project. I used Kivy Module for the Graphic User Interface.
+This is an app that I planned to make for a 12th grade Computer Science Project. I used Kivy Module for the Graphic User Interface.
 The scope of this app is pretty basic right now but I do plan to make it better down the road.
 
 _<h2>Details</h2>_
