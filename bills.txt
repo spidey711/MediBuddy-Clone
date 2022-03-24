@@ -1,13 +1,15 @@
 -------------- BILL RECEIPT --------------
 
 Date: 2022-03-24
-Time: 11:37:22.864302
+Time: 11:54:03.223722
 
 Medicines Purchased:-
 
 Aspirin:  Rs 32
+Crocin:  Rs 30
+Paracetamol:  Rs 27
 
-Total Price:  Rs 32
+Total Price:  Rs 89
 
 Thank you for your purchase!
 --------------------------------------------
