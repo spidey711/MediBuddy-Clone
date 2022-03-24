@@ -1,12 +1,13 @@
 -------------- BILL RECEIPT --------------
 
 Date: 2022-03-24
-Time: 08:25:48.248442
+Time: 11:37:22.864302
 
 Medicines Purchased:-
 
+Aspirin:  Rs 32
 
-Total Price:  Rs 0
+Total Price:  Rs 32
 
 Thank you for your purchase!
 --------------------------------------------
