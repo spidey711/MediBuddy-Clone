@@ -134,25 +134,20 @@ class BuyMedicinesScreen(Screen):
     medicine = ObjectProperty(None)
     
     def addToCart(self):
-        cursor.execute("SELECT med FROM prices")
-        data = cursor.fetchall()
-        cross_ref = []      # search variable, incase the user mispells any medicine
-        for item in data:
-            cross_ref.append(''.join(item))
         if self.medicine.text.strip(): # no blank input box
             if self.medicine.text.isalpha() or "," in self.medicine.text: # no special characters
                 li = list(self.medicine.text.split(","))
                 for item in li:
                     item = item.lower().strip() # remove whitespaces
                     medList.append(item) 
-                    popup = Popup(
-                        title="Message",
-                        content=Label(text="Med(s) added to cart.", color="white"),
-                        size_hint=(None, None),
-                        size=(300, 200)
-                    )
-                    popup.open()
-                    return True
+                popup = Popup(
+                    title="Message",
+                    content=Label(text="Med(s) added to cart.", color="white"),
+                    size_hint=(None, None),
+                    size=(300, 200)
+                )
+                popup.open()
+                return True
             else:
                 popup = Popup(
                     title="Message",
