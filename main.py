@@ -135,8 +135,8 @@ class BuyMedicinesScreen(Screen):
     
     def addToCart(self):
 
-        if self.medicine.text.isalpha() or "," in self.medicine.text: # no special characters
-            if self.medicine.text.strip(): # no blank input box
+        if self.medicine.text.strip(): # no blank input box
+            if self.medicine.text.isalpha() or "," in self.medicine.text: # no special characters
                 li = list(self.medicine.text.split(","))
                 for item in li:
                     item = item.lower().strip() # remove whitespaces
@@ -152,7 +152,7 @@ class BuyMedicinesScreen(Screen):
             else:
                 popup = Popup(
                     title="Message",
-                    content=Label(text="No medicine name was mentioned.", color="white"),
+                    content=Label(text="Following are not allowed:-\nSpecial Characters, Numbers\nexcept commas (,)", color="white"),
                     size_hint=(None, None),
                     size=(300, 200)
                 )
@@ -161,7 +161,7 @@ class BuyMedicinesScreen(Screen):
         else:
             popup = Popup(
                 title="Message",
-                content=Label(text="Following are not allowed:-\nSpecial Characters, Numbers\nexcept commas (,)", color="white"),
+                content=Label(text="No medicine name was mentioned.", color="white"),
                 size_hint=(None, None),
                 size=(300, 200)
             )
