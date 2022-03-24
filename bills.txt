@@ -1,15 +1,12 @@
 -------------- BILL RECEIPT --------------
 
 Date: 2022-03-24
-Time: 08:16:54.497187
+Time: 08:25:48.248442
 
 Medicines Purchased:-
 
-Crocin:  Rs 30
-Nexium:  Rs 25
-Paracetamol:  Rs 27
 
-Total Price:  Rs 82
+Total Price:  Rs 0
 
 Thank you for your purchase!
 --------------------------------------------
